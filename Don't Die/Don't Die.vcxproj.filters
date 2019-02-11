@@ -24,12 +24,18 @@
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\Tiles.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Don%27t Die\Don%27t Die\Dot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Don%27t Die\Don%27t Die\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Don%27t Die\Don%27t Die\Tiles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Don%27t Die\Don%27t Die\Dot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

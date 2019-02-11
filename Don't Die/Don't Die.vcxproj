@@ -135,11 +135,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Don%27t Die\Don%27t Die\Dot.cpp" />
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\Game.cpp" />
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\main.cpp" />
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\Tiles.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Don%27t Die\Don%27t Die\Dot.h" />
     <ClInclude Include="..\..\Don%27t Die\Don%27t Die\Game.h" />
     <ClInclude Include="..\..\Don%27t Die\Don%27t Die\Tiles.h" />
   </ItemGroup>
