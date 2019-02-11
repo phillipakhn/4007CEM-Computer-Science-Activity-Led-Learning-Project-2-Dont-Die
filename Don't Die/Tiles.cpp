@@ -28,10 +28,16 @@ Tiles::Tiles(int x, int y, int tileType)
 	box.y = y;
 
 	box.w = TILE_WIDTH;
-	box.h = TILE.HEIGHT;
+	box.h = TILE_HEIGHT;
 
 	type = tileType;
 
+}
+
+void Tiles::show() {
+	/*if (check_collision(camera, box) == True) {
+		apply_surface(box.x - camera.x, box.y - camera.y, tileSheet, screen, &clips[type]);
+	}*/
 }
 
 
