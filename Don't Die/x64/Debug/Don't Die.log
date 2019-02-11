@@ -1,5 +1,2 @@
-﻿  Game.cpp
-c:\users\kieran\source\repos\don't die\don't die\game.cpp(1): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  main.cpp
-  Generating Code...
-  Don't Die.vcxproj -> C:\Users\Kieran\source\repos\Don't Die\x64\Debug\Don't Die.exe
+﻿  Tiles.cpp
+  Don't Die.vcxproj -> C:\Users\Alastair\source\repos\Don't Die\x64\Debug\Don't Die.exe
