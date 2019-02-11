@@ -1,0 +1,29 @@
+//
+//  main.cpp
+//  StarveDatabase
+//
+//  Created by Karl Atkinson on 11/02/2019.
+//  Copyright © 2019 Karl Atkinson. All rights reserved.
+//
+
+#include <iostream>
+#include <stdio.h>
+#include <sqlite3.h> //Libary imported so that the code can link to database
+
+
+
+int main(int argc, char* argv[]) {
+    sqlite3 *db;
+    char *zerrMsg = 0;
+    int rc;
+    
+    rc = sqlite3_open("DontStarve.db", &db); //this is the name of the database file that is linked to the code
+    
+    if( rc ) {
+        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
+        return(0);
+    } else {
+        fprintf(stderr, "Database has opened\n");
+    }
+    sqlite3_close(db);
+}
