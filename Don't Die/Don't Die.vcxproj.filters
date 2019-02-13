@@ -21,10 +21,10 @@
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Don%27t Die\Don%27t Die\Tiles.cpp">
+    <ClCompile Include="..\..\Don%27t Die\Don%27t Die\TextureController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Don%27t Die\Don%27t Die\Dot.cpp">
+    <ClCompile Include="..\..\Don%27t Die\Don%27t Die\GameBody.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,10 +32,10 @@
     <ClInclude Include="..\..\Don%27t Die\Don%27t Die\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Don%27t Die\Don%27t Die\Tiles.h">
+    <ClInclude Include="TextureController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Don%27t Die\Don%27t Die\Dot.h">
+    <ClInclude Include="..\..\Don%27t Die\Don%27t Die\GameBody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

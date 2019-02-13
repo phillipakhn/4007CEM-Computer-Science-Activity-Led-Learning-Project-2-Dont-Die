@@ -1,6 +1,14 @@
 #include "Game.h""
+#include "TextureController.h"
 #include <iostream>
+#include "GameBody.h"
 using namespace std;
+
+GameBody* character;
+
+
+//SDL_Texture* playerTexture;
+//SDL_Rect srcR, destR;
 
 Game::Game()
 {}
@@ -28,11 +36,10 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		if (renderer)
-		{
-			SDL_SetRenderDrawColor(renderer,255,255,255,255);
+		{	
+			SDL_SetRenderDrawColor(renderer,255,255,255,255);			
 			cout << "Renderer Created" << endl;
 		}
-
 		gameRunning = true;
 	}
 	else
@@ -40,8 +47,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 		gameRunning = false; //If SDL has not been initailsed properly
 	}
 
-
-
+	//playerTexture = TextureController::LoadTexture("Images/Don'tStarve.png", renderer); // Simple texture loader youtube
+	character = new GameBody("Images/Wilson.png", renderer);
 }
 
 void Game::handleEvents()
@@ -59,13 +66,16 @@ void Game::handleEvents()
 }
 
 void Game::update()
-{}
+{
+	character->Update();
+}
 
 void Game::render()
 {
 	SDL_RenderClear(renderer);
+	//SDL_RenderCopy(renderer, playerTexture, NULL, &destR); // 1st Null is how much of the texture to render, 2nd is where to place it.
+	character->Render();
 	SDL_RenderPresent(renderer);
-
 }
 
 void Game::clean()
