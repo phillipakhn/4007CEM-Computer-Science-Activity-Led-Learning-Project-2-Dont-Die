@@ -1,10 +1,17 @@
-#include "Game.h""
+#include "Game.h"
 #include "TextureController.h"
 #include <iostream>
 #include "GameBody.h"
+#include "Map.h"
+
 using namespace std;
 
 GameBody* character;
+
+Map* map;
+
+SDL_Renderer* Game::renderer = nullptr;
+
 
 
 //SDL_Texture* playerTexture;
@@ -48,7 +55,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 	}
 
 	//playerTexture = TextureController::LoadTexture("Images/Don'tStarve.png", renderer); // Simple texture loader youtube
-	character = new GameBody("Images/Wilson.png", renderer);
+	character = new GameBody("Images/Wilson.png");
+	map = new Map();
 }
 
 void Game::handleEvents()
@@ -73,6 +81,9 @@ void Game::update()
 void Game::render()
 {
 	SDL_RenderClear(renderer);
+
+	map->DrawMap();
+
 	//SDL_RenderCopy(renderer, playerTexture, NULL, &destR); // 1st Null is how much of the texture to render, 2nd is where to place it.
 	character->Render();
 	SDL_RenderPresent(renderer);

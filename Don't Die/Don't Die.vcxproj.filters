@@ -27,6 +27,12 @@
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\GameBody.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Don%27t Die\Don%27t Die\mapDefinitions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Don%27t Die\Don%27t Die\Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Don%27t Die\Don%27t Die\Game.h">
@@ -36,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Don%27t Die\Don%27t Die\GameBody.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Don%27t Die\Don%27t Die\Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,7 +5,7 @@
 class GameBody {
 
 public:
-	GameBody(const char* texturePanel, SDL_Renderer* render);
+	GameBody(const char* texturePanel);
 	~GameBody();
 
 	void Update();
@@ -17,6 +17,5 @@ private:
 
 	SDL_Texture* bodyTexture;
 	SDL_Rect srcRectangle, destRectangle;
-	SDL_Renderer* renderer;
 
 };

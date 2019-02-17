@@ -2,10 +2,9 @@
 #include "TextureController.h"
 
 
-GameBody::GameBody(const char* texturePanel, SDL_Renderer* render)
+GameBody::GameBody(const char* texturePanel)
 {
-	renderer = render;
-	bodyTexture = TextureController::LoadTexture(texturePanel, render);
+	bodyTexture = TextureController::LoadTexture(texturePanel);
 	if (bodyTexture != NULL)
 	{
 		std::cout << "Texture loaded" << std::endl;
@@ -30,5 +29,5 @@ void GameBody::Update()
 
 void GameBody::Render()
 {
-	SDL_RenderCopy(renderer, bodyTexture, NULL, NULL);
+	SDL_RenderCopy(Game::renderer, bodyTexture, NULL, NULL);
 }

@@ -1,2 +1,3 @@
-﻿  GameBody.cpp
-  Don't Die.vcxproj -> C:\Users\Kieran\source\repos\Don't Die\x64\Debug\Don't Die.exe
+﻿  Map.cpp
+c:\users\alastair\source\repos\don't die\don't die\map.cpp(47): warning C4553: '==': result of expression not used; did you intend '='?
+  Don't Die.vcxproj -> C:\Users\Alastair\source\repos\Don't Die\x64\Debug\Don't Die.exe

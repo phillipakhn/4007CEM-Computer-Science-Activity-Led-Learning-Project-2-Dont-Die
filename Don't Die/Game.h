@@ -15,11 +15,12 @@ public:
 	void update(); // update all game objects 
 	void render(); 
 	void clean(); // Clear game objects from memory onced finshed with them
+	static SDL_Renderer *renderer;
 	bool running() { return gameRunning;} // let the main function know the game is running
 
 private:
 	bool gameRunning; 
 	SDL_Window *window; 
-	SDL_Renderer *renderer;
+	//SDL_Renderer *renderer;
 };
 #endif /* Game_h*/
