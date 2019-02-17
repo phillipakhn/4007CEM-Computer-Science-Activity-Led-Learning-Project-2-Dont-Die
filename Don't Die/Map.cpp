@@ -1,5 +1,6 @@
 #include "Map.h"
 #include "TextureController.h"
+#include "GenerateMap.h"
 
 int world[20][25] = {  //matrix for the world but will be read from a database in the future
 	{1,2,0,1,2,1,2,1,1,1,3,2,1,1,3,0,3,3,0,3,1,3,2,3,0},
@@ -44,7 +45,7 @@ Map::Map()
 void Map::LoadMap(int arr[20][25]) {
 	for (int row = 0; row < 20; row++) {
 		for (int column = 0; column < 25; column++) {
-			map[row][column] == arr[row][column];
+			world[row][column] == arr[row][column];
 		}
 	}
 }
@@ -53,28 +54,32 @@ void Map::DrawMap() {
 	int type = 0;
 	for (int row = 0; row < 20; row++) {
 		for (int column = 0; column < 25; column++) {
-			type = map[row][column];
+
+			type = world[row][column];
 
 			dest.x = column * 32;
 			dest.y = row * 32;
 
+			//std::cout << type << std::endl;
+
+			
 
 			switch (type) {
 			case 0: //renders the grass texture
 				TextureController::Draw(grass, src, dest);
-				std::cout << "Grass Rendered" << std::endl;
+				//std::cout << "Grass Rendered" << std::endl;
 				break;
 			case 1: //renders the water
 				TextureController::Draw(water, src, dest);
-				std::cout << "Water Rendered" << std::endl;
+				//std::cout << "Water Rendered" << std::endl;
 				break;
 			case 2: //renders any trees
 				TextureController::Draw(tree, src, dest);
-				std::cout << "Tree Rendered" << std::endl;
+				//std::cout << "Tree Rendered" << std::endl;
 				break;
 			case 3: //renders the long grass
 				TextureController::Draw(longGrass, src, dest);
-				std::cout << "Long Grass Rendered" << std::endl;
+				//std::cout << "Long Grass Rendered" << std::endl;
 				break;
 			default:
 				break;
