@@ -1,7 +1,7 @@
 #include "Map.h"
 #include "TextureController.h"
 
-int world[20][25] = {
+int world[20][25] = {  //matrix for the world but will be read from a database in the future
 	{1,2,0,1,2,1,2,1,1,1,3,2,1,1,3,0,3,3,0,3,1,3,2,3,0},
 	{3,1,3,0,1,1,0,0,1,1,1,0,3,1,2,3,3,3,2,1,3,2,1,1,2},
 	{0,0,0,0,3,3,3,2,3,1,3,0,3,2,0,0,1,2,1,3,2,1,2,2,3},
@@ -60,17 +60,21 @@ void Map::DrawMap() {
 
 
 			switch (type) {
-			case 0:
+			case 0: //renders the grass texture
 				TextureController::Draw(grass, src, dest);
+				std::cout << "Grass Rendered" << std::endl;
 				break;
-			case 1:
+			case 1: //renders the water
 				TextureController::Draw(water, src, dest);
+				std::cout << "Water Rendered" << std::endl;
 				break;
-			case 2:
+			case 2: //renders any trees
 				TextureController::Draw(tree, src, dest);
+				std::cout << "Tree Rendered" << std::endl;
 				break;
-			case 3:
+			case 3: //renders the long grass
 				TextureController::Draw(longGrass, src, dest);
+				std::cout << "Long Grass Rendered" << std::endl;
 				break;
 			default:
 				break;
