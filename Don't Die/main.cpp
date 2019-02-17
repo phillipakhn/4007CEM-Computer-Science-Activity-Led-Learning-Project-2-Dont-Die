@@ -11,8 +11,8 @@ int main(int argc, char *args[])
 {
 	game = new Game();
 
-	int fps = 80;
-	int frameTime = 1000 / fps;
+	int fps = 200;
+	int frameTime = 1000 / (fps*1.08);
 
 	game->init("Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false);
 	
