@@ -11,7 +11,8 @@ int main(int argc, char *args[])
 {
 	game = new Game();
 
-	int fps = 200;
+	bool fpsLimit = true;
+	int fps = 75;
 	int frameTime = 1000 / (fps*1.08);
 
 	game->init("Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false);
@@ -21,7 +22,9 @@ int main(int argc, char *args[])
 		game->handleEvents();
 		game->update();
 		game->render();
-		std::this_thread::sleep_for(std::chrono::milliseconds(frameTime));
+		if (fpsLimit) {
+			std::this_thread::sleep_for(std::chrono::milliseconds(frameTime)); 
+			}
 	}
 
 	game->clean();
