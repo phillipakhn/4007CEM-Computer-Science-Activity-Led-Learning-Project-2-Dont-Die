@@ -1,29 +1,166 @@
-//
-//  main.cpp
-//  StarveDatabase
-//
 //  Created by Karl Atkinson on 11/02/2019.
 //  Copyright © 2019 Karl Atkinson. All rights reserved.
-//
-
 #include <iostream>
+#include <SDL2/SDL.H>
 #include <stdio.h>
 #include <sqlite3.h> //Libary imported so that the code can link to database
 
-
+static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
+    int data;
+    for(data = 0; data<argc; data++) {
+        printf("%s = %s\n", azColName[data], argv[data] ? argv[data] : "NULL");
+    }
+    printf("\n");
+    return 0;
+}
 
 int main(int argc, char* argv[]) {
     sqlite3 *db;
-    char *zerrMsg = 0;
-    int rc;
+    char *zErrMsg = 0;
+    int openData;
+   const char *sql;
     
-    rc = sqlite3_open("DontStarve.db", &db); //this is the name of the database file that is linked to the code
+    openData = sqlite3_open("DontStarve.db", &db); //this is the name of the database file that is linked to the code
     
-    if( rc ) {
+    if( openData ) {
         fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
         return(0);
     } else {
         fprintf(stderr, "Database has opened\n");
     }
+    
+    sql = "CREATE TABLE World("  // World Table
+    "WorldID VARCHAR PRIMARY KEY NOT NULL,"
+    "PlayerID VARCHAR REFERENCES Player (PlayerID) NOT NULL,"
+    "MapID VARCHAR REFERENCES Map (MapID) NOT NULL,"
+    "Time VARCHAR NOT NULL);";
+
+    openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    if( openData != SQLITE_OK ){
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    } else {
+        fprintf(stdout, "Tables created successfully\n");
+    }
+    
+    sql = "CREATE TABLE Player(" // Player Table
+    "PlayerID VARCHAR PRIMARY KEY NOT NULL,"
+    "PlayerName VARCHAR(35) NOT NULL,"
+    "PlayerFood VARCHAR(40) NOT NULL,"
+    "PlayerPosition VARCHAR(40) NOT NULL,"
+    "PlayerSanity VARCHAR(40) NOT NULL );";
+    
+    openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    if( openData != SQLITE_OK ){
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    } else {
+        fprintf(stdout, "Tables created successfully\n");
+    }
+    
+    sql = "CREATE TABLE Crop(" // Crop Table
+    "CropID VARCHAR PRIMARY KEY NOT NULL,"
+    "WorldID VARCHAR REFERENCES World (WorldID) NOT NULL,"
+    "CropType VARCHAR NOT NULL,"
+    "CropPostion VARCHAR(40) NOT NULL,"
+    "GrowthTime VARCHAR NOT NULL );";
+    
+    openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    if( openData != SQLITE_OK ){
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    } else {
+        fprintf(stdout, "Tables created successfully\n");
+    }
+    
+    sql = "CREATE TABLE Inventory(" //Inventory Table
+    "InventoryID VARCHAR PRIMARY KEY NOT NULL,"
+    "ItemID VARCHAR REFERENCES Item (ItemID) NOT NULL,"
+    "InventoryName VARCHAR NOT NULL,"
+    "InventorySize INT);";
+    
+    openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    if( openData != SQLITE_OK ){
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    } else {
+        fprintf(stdout, "Tables created successfully\n");
+    }
+    
+    sql = "CREATE TABLE Chest(" //Chest Table
+    "ChestID VARCHAR PRIMARY KEY NOT NULL,"
+    "WorldID VARCHAR REFERENCES World (WorldID) NOT NULL,"
+    "ChestName VARCHAR NOT NULL,"
+    "ChestNumber VARCHAR NOT NULL,"
+    "ChestIndex VARCHAR NOT NULL,"
+    "ChestPosition VARCHAR NOT NULL );";
+    
+    openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    if( openData != SQLITE_OK ){
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    } else {
+        fprintf(stdout, "Tables created successfully\n");
+    }
+    
+    sql = "CREATE TABLE Item(" //Item Table
+    "ItemID VARCHAR PRIMARY KEY NOT NULL,"
+    "ItemName VARCHAR(40) NOT NULL);";
+    
+    openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    if( openData != SQLITE_OK ){
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    } else {
+        fprintf(stdout, "Tables created successfully\n");
+    }
+    
+    sql = "CREATE TABLE Item_line("// Item Line table
+    "Item_LineID VARCHAR PRIMARY KEY NOT NULL,"
+    "ItemID VARCHAR REFERENCES Item (ItemID) NOT NULL,"
+    "ChestID VARCHAR REFERENCES Chest (ChestID) NOT NULL,"
+    "TrapID VARCHAR REFERENCES Trap (TrapID) NOT NULL,"
+    "ItemQuantity INT NOT NULL,"
+    "ItemIndex VARCHAR NOT NULL );";
+    
+    openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    if( openData != SQLITE_OK ){
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    } else {
+        fprintf(stdout, "Tables created successfully\n");
+    }
+    
+    sql = "CREATE TABLE Map(" // Map Table
+    "MapID VARCHAR PRIMARY KEY NOT NULL,"
+    "ChestID VARCHAR NOT NULL,"
+    "PLayerID VARCHAR NOT NULL,"
+    "CropID VARCHAR NOT NULL );";
+    openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    if( openData != SQLITE_OK ){
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    } else {
+        fprintf(stdout, "Tables created successfully\n");
+    }
+    
+    sql = "CREATE TABLE Trap(" // Trap Table
+    "TrapID VARCHAR PRIMARY KEY NOT NULL,"
+    "PlayerID VARCHAR REFERENCES Player (PlayerID) NOT NULL,"
+    "TrapPosition VARCHAR NOT NULL,"
+    "TrapUsed VARCHAR(50),"
+    "TimesUsed INT );";
+    
+    
+    openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
+    if( openData != SQLITE_OK ){
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+    } else {
+        fprintf(stdout, "Tables created successfully\n");
+    }
     sqlite3_close(db);
+    return 0;
+
 }
+
