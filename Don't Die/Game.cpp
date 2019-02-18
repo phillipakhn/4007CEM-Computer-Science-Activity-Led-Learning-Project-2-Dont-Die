@@ -55,7 +55,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 	}
 
 	//playerTexture = TextureController::LoadTexture("Images/Don'tStarve.png", renderer); // Simple texture loader youtube
-	character = new GameBody("Images/Wilson.png");
+	//character = new GameBody("Images/Wilson.png");
 	map = new Map();
 }
 
@@ -75,17 +75,19 @@ void Game::handleEvents()
 
 void Game::update()
 {
-	character->Update();
+	//character->Update();
 }
 
 void Game::render()
 {
 	SDL_RenderClear(renderer);
 
+	//float zoom = 2;
+
 	map->DrawMap();
 
 	//SDL_RenderCopy(renderer, playerTexture, NULL, &destR); // 1st Null is how much of the texture to render, 2nd is where to place it.
-	character->Render();
+	//character->Render();
 	SDL_RenderPresent(renderer);
 }
 

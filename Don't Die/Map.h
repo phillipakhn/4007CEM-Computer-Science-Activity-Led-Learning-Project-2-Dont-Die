@@ -8,7 +8,9 @@ public:
 	Map();
 	~Map();
 
-	void LoadMap(int arr[20][25]);
+	//float zoom = 2;
+
+	void LoadMap(int arr[32][32]);
 	void DrawMap();
 
 
@@ -20,7 +22,7 @@ private:
 	SDL_Texture* tree;
 	SDL_Texture* longGrass;
 
-	int map[20][25];
+	int map[32][32];
 
 };
 

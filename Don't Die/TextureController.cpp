@@ -20,6 +20,7 @@ SDL_Texture* TextureController::LoadTexture(const char* texture)
 void TextureController::Draw(SDL_Texture * tex, SDL_Rect src, SDL_Rect dest)
 {
 	SDL_RenderCopy(Game::renderer, tex, &src, &dest);
+	//std::cout << "Render" << std::endl;
 }
 
-// Simple texture loader youtube 
+// Simple texture loader youtube

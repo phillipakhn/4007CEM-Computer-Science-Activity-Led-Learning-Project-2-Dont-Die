@@ -13,7 +13,7 @@ int main(int argc, char *args[])
 
 	bool fpsLimit = true;
 
-	int fps = 150;
+	int fps = 75;
 	if (fps == 0) {
 		bool fpsLimit = false;
 	}
