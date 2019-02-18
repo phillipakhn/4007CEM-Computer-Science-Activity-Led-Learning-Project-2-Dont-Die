@@ -12,7 +12,11 @@ int main(int argc, char *args[])
 	game = new Game();
 
 	bool fpsLimit = true;
-	int fps = 75;
+
+	int fps = 150;
+	if (fps == 0) {
+		bool fpsLimit = false;
+	}
 	int frameTime = 1000 / (fps*1.08);
 
 	game->init("Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false);
