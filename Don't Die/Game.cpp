@@ -57,6 +57,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 	//playerTexture = TextureController::LoadTexture("Images/Don'tStarve.png", renderer); // Simple texture loader youtube
 	//character = new GameBody("Images/Wilson.png");
 	map = new Map();
+	//std::cout << Map::getRectangle() << std::endl;
 }
 
 void Game::handleEvents()

@@ -1,7 +1,5 @@
 ﻿  Map.cpp
-c:\users\alastair\source\repos\don't die\don't die\map.cpp(49): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\alastair\source\repos\don't die\don't die\map.cpp(50): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\alastair\source\repos\don't die\don't die\map.cpp(63): warning C4553: '==': result of expression not used; did you intend '='?
-c:\users\alastair\source\repos\don't die\don't die\map.cpp(77): warning C4305: 'initializing': truncation from 'double' to 'float'
-c:\users\alastair\source\repos\don't die\don't die\map.cpp(78): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\alastair\source\repos\don't die\don't die\map.cpp(90): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\alastair\source\repos\don't die\don't die\map.cpp(103): warning C4553: '==': result of expression not used; did you intend '='?
+c:\users\alastair\source\repos\don't die\don't die\map.cpp(118): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
   Don't Die.vcxproj -> C:\Users\Alastair\source\repos\Don't Die\x64\Debug\Don't Die.exe
