@@ -1,8 +1,8 @@
 //  Created by Karl Atkinson on 11/02/2019.
 //  Copyright © 2019 Karl Atkinson. All rights reserved.
 #include <iostream>
-#include <SDL2/SDL.H>
 #include <stdio.h>
+#include <SDL2/SDL.h>
 #include <sqlite3.h> //Libary imported so that the code can link to database
 
 static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
@@ -26,130 +26,177 @@ int main(int argc, char* argv[]) {
         fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
         return(0);
     } else {
-        fprintf(stderr, "Database has opened\n");
+        fprintf(stdout, "Tables have been created.\n");
     }
     
     sql = "CREATE TABLE World("  // World Table
     "WorldID VARCHAR PRIMARY KEY NOT NULL,"
-    "PlayerID VARCHAR REFERENCES Player (PlayerID) NOT NULL,"
-    "MapID VARCHAR REFERENCES Map (MapID) NOT NULL,"
+    "PlayerID VARCHAR REFERENCES Player (PlayerID) NOT NULL,"// Composite Key
+    "MapID VARCHAR REFERENCES Map (MapID) NOT NULL,"// Composite Key
     "Time VARCHAR NOT NULL);";
+    
+    //example data for World Table
+   sql = "INSERT INTO World(WorldID,PlayerID,MapID,Time)"
+    "VALUES('First World','P1','M1','T1');";// This data will be added to the World table
 
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
         fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables created successfully\n");
+        fprintf(stdout, "Tables have been created.\n");
+        fprintf(stdout, "Records have been created.\n");
     }
     
     sql = "CREATE TABLE Player(" // Player Table
     "PlayerID VARCHAR PRIMARY KEY NOT NULL,"
+    "InventoryID VARCHAR REFERENCES Inventory (InventoryID) NOT NULL, "
     "PlayerName VARCHAR(35) NOT NULL,"
     "PlayerFood VARCHAR(40) NOT NULL,"
     "PlayerPosition VARCHAR(40) NOT NULL,"
     "PlayerSanity VARCHAR(40) NOT NULL );";
     
+    //example data for Player Table
+    sql = "INSERT INTO Player (PlayerID,InventoryID,PLayerName,PlayerFood, PlayerPosition, PlayerSanity)"
+    "VALUES(1, 1, 1, 'Meat', 400, 50);";// This data will be added to the Player table
+    
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
         fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables created successfully\n");
+        fprintf(stdout, "Tables have been created.\n");
+        fprintf(stdout, "Records have been created.\n");
     }
     
     sql = "CREATE TABLE Crop(" // Crop Table
     "CropID VARCHAR PRIMARY KEY NOT NULL,"
-    "WorldID VARCHAR REFERENCES World (WorldID) NOT NULL,"
+    "WorldID VARCHAR REFERENCES World (WorldID) NOT NULL,"//Foreign key
     "CropType VARCHAR NOT NULL,"
-    "CropPostion VARCHAR(40) NOT NULL,"
+    "CropPosition VARCHAR(40) NOT NULL,"
     "GrowthTime VARCHAR NOT NULL );";
+    
+    //example data for Crop Table
+    sql = "INSERT INTO Crop(CropID,WorldID,CropType,CropPosition,GrowthTime)"
+    "VALUES(1, 'First World','Wheat',21,-100);";// This data will be added to the Crop table
+
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
         fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables created successfully\n");
+        fprintf(stdout, "Tables have been created.\n");
+        fprintf(stdout, "Records have been created.\n");
     }
     
     sql = "CREATE TABLE Inventory(" //Inventory Table
     "InventoryID VARCHAR PRIMARY KEY NOT NULL,"
-    "ItemID VARCHAR REFERENCES Item (ItemID) NOT NULL,"
+    "ItemID VARCHAR REFERENCES Item (ItemID) NOT NULL,"//Foreign key
     "InventoryName VARCHAR NOT NULL,"
     "InventorySize INT);";
+    
+    //example data for Inventory Table
+    sql = "INSERT INTO Inventory(InventoryID,ItemID,InventoryName,InventorySize)"
+    "VALUES(1,'I1','Inventory1',20);";// This data will be added to the Inventory table
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
         fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables created successfully\n");
+        fprintf(stdout, "Tables have been created.\n");
+        fprintf(stdout, "Records have been created.\n");
     }
     
     sql = "CREATE TABLE Chest(" //Chest Table
     "ChestID VARCHAR PRIMARY KEY NOT NULL,"
-    "WorldID VARCHAR REFERENCES World (WorldID) NOT NULL,"
+    "WorldID VARCHAR REFERENCES World (WorldID) NOT NULL,"//Foreign key
     "ChestName VARCHAR NOT NULL,"
     "ChestNumber VARCHAR NOT NULL,"
     "ChestIndex VARCHAR NOT NULL,"
     "ChestPosition VARCHAR NOT NULL );";
     
+    //example data for Chest Table
+    sql = "INSERT INTO Chest(ChestID,WorldID,ChestName,ChestNumber,ChestIndex,ChestPosition)"
+    "VALUES('C1', 'First World' ,'Armour', 1, 1, 40);";// This data will be added to the Chest table
+    
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
         fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables created successfully\n");
+        fprintf(stdout, "Tables have been created.\n");
+        fprintf(stdout, "Records have been created.\n");
     }
     
     sql = "CREATE TABLE Item(" //Item Table
     "ItemID VARCHAR PRIMARY KEY NOT NULL,"
+    "InventoryID VARCHAR REFERENCES Inventory(InventoryID) NOT NULL,"
     "ItemName VARCHAR(40) NOT NULL);";
+    
+    //example data for Item Table
+    sql = "INSERT INTO Item(ItemID, InventoryID, ItemName)"
+    "VALUES('I1', '1', 'Egg');";// This data will be added to the Item table
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
         fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables created successfully\n");
+        fprintf(stdout, "Tables have been created.\n");
+        fprintf(stdout, "Records have been created.\n");
     }
     
     sql = "CREATE TABLE Item_line("// Item Line table
     "Item_LineID VARCHAR PRIMARY KEY NOT NULL,"
-    "ItemID VARCHAR REFERENCES Item (ItemID) NOT NULL,"
-    "ChestID VARCHAR REFERENCES Chest (ChestID) NOT NULL,"
-    "TrapID VARCHAR REFERENCES Trap (TrapID) NOT NULL,"
+    "ItemID VARCHAR REFERENCES Item (ItemID) NOT NULL,"// Composite Key
+    "ChestID VARCHAR REFERENCES Chest (ChestID) NOT NULL,"// Composite Key
+    "TrapID INT REFERENCES Trap (TrapID) NOT NULL,"// Composite Key
     "ItemQuantity INT NOT NULL,"
     "ItemIndex VARCHAR NOT NULL );";
+    
+    //example data for Item line Table
+    sql = "INSERT INTO Item_Line(Item_LineID,ItemID, ChestID, TrapID, ItemQuantity, ItemIndex)"
+   "VALUES(1, 'I1', 'C1', 1, 23, 829);";// This data will be added to the Item Line table
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
         fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables created successfully\n");
+        fprintf(stdout, "Tables have been created.\n");
+        fprintf(stdout, "Records have been created.\n");
     }
     
     sql = "CREATE TABLE Map(" // Map Table
     "MapID VARCHAR PRIMARY KEY NOT NULL,"
-    "ChestID VARCHAR NOT NULL,"
-    "PLayerID VARCHAR NOT NULL,"
-    "CropID VARCHAR NOT NULL );";
+    "ChestID VARCHAR NOT NULL,"// Composite Key
+    "TrapID VARCHAR NOT NULL );";// Composite Key
+    
+    //example data for Map Table
+   sql = "INSERT INTO Map(MapID,ChestID,TrapID)"
+    "VALUES(1,1,1);"; // This data will be added to the Map table
+    
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
         fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables created successfully\n");
+        fprintf(stdout, "Tables have been created.\n");
+        fprintf(stdout, "Records have been created.\n");
     }
     
     sql = "CREATE TABLE Trap(" // Trap Table
-    "TrapID VARCHAR PRIMARY KEY NOT NULL,"
-    "PlayerID VARCHAR REFERENCES Player (PlayerID) NOT NULL,"
+    "TrapID INT PRIMARY KEY NOT NULL,"
+    "PlayerID VARCHAR REFERENCES Player (PlayerID) NOT NULL,"// Foreign Key
     "TrapPosition VARCHAR NOT NULL,"
-    "TrapUsed VARCHAR(50),"
+    "TrapUsed INT,"
     "TimesUsed INT );";
+   
+//example data for Trap Table
+  sql = "INSERT INTO Trap(TrapID, PlayerID, TrapPosition, TrapUsed, TimesUsed)"
+    "VALUES (1,1,450,1,2);";// This data will be added to the Trap table
     
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
@@ -157,10 +204,12 @@ int main(int argc, char* argv[]) {
         fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables created successfully\n");
+        fprintf(stdout, "Tables have been created.\n");
+        fprintf(stdout, "Records have been created.\n");
     }
     sqlite3_close(db);
     return 0;
-
 }
+
+
 
