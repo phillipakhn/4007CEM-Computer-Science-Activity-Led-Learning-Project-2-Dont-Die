@@ -29,5 +29,7 @@ void GameBody::Update()
 
 void GameBody::Render()
 {
+	//SDL_RenderCopy(Game::renderer, bodyTexture, &src, &dest);
+	//TextureController::Draw(bodyTexture, SDL_Rect src, SDL_Rect dest);
 	SDL_RenderCopy(Game::renderer, bodyTexture, NULL, NULL);
 }

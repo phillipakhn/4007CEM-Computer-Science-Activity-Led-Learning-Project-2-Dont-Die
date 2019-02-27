@@ -105,10 +105,8 @@ void Map::LoadMap(int arr[64][64]) {
 	}
 }
 
-void Map::DrawMap() {
+void Map::DrawMap(int xmoved, int ymoved, bool night) {
 	int type = 0;
-	int xmoved = 16; //MOVE ELSEWHERE
-	int ymoved = 35; //MOVE ELSEWHERE
 	for (int row = ymoved; row < (64+ymoved); row++) { 
 		for (int column = xmoved; column < (64+xmoved); column++) {
 
@@ -119,12 +117,7 @@ void Map::DrawMap() {
 
 			dest.x = (column - xmoved) * zoomSize; //zoomSize;
 			dest.y = (row-ymoved) * zoomSize;
-
-
-			bool night = false;
-			//bool night = true;
-
-			
+	
 
 			switch (type) {
 			case 0: //renders the grass texture

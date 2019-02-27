@@ -153,6 +153,7 @@
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\main.cpp" />
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\Map.cpp" />
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\mapDefinitions.cpp" />
+    <ClCompile Include="..\..\Don%27t Die\Don%27t Die\mapMove.cpp" />
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\TextureController.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +161,7 @@
     <ClInclude Include="..\..\Don%27t Die\Don%27t Die\GameBody.h" />
     <ClInclude Include="..\..\Don%27t Die\Don%27t Die\GenerateMap.h" />
     <ClInclude Include="..\..\Don%27t Die\Don%27t Die\Map.h" />
+    <ClInclude Include="..\..\Don%27t Die\Don%27t Die\mapMove.h" />
     <ClInclude Include="TextureController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

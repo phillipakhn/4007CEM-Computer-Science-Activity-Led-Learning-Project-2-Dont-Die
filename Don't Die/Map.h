@@ -11,7 +11,7 @@ public:
 	//float zoom = 2;
 
 	void LoadMap(int arr[64][64]);
-	void DrawMap();
+	void DrawMap(int xmoved, int ymoved, bool night);
 	//static SDL_Rect* getRectangle();
 
 

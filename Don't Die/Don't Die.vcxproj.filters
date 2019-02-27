@@ -36,6 +36,9 @@
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\GenerateMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Don%27t Die\Don%27t Die\mapMove.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Don%27t Die\Don%27t Die\Game.h">
@@ -51,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Don%27t Die\Don%27t Die\GenerateMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Don%27t Die\Don%27t Die\mapMove.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
