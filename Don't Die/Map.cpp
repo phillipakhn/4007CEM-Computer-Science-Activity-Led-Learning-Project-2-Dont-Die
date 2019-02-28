@@ -1,6 +1,5 @@
 #include "Map.h"
-#include "TextureController.h"
-#include "GenerateMap.h"
+
 
 int world[64][64] = {  //matrix for the world but will be read from a database in the future
 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -69,29 +68,36 @@ int world[64][64] = {  //matrix for the world but will be read from a database i
 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-Map::Map()
+Map::Map(SDL_Renderer* render)
 {
-	grass = TextureController::LoadTexture("Images/grass.png");
-	darkGrass = TextureController::LoadTexture("Images/darkGrass.png");
-	water = TextureController::LoadTexture("Images/water.png");
-	darkWater = TextureController::LoadTexture("Images/darkwater.png");
-	tree = TextureController::LoadTexture("Images/tree.png");
-	darkTree = TextureController::LoadTexture("Images/darkTree.png");
-	longGrass = TextureController::LoadTexture("Images/longGrass.png");
-	darkLongGrass = TextureController::LoadTexture("Images/darklongGrass.png");
-	fire = TextureController::LoadTexture("Images/fire.png");
-	fireGrass = TextureController::LoadTexture("Images/fireGrass.png");
-	fireTree = TextureController::LoadTexture("Images/fireTree.png");
-	fadedFire = TextureController::LoadTexture("Images/fadedFire.png");
+	xmoved = 0;
+	ymoved = 0;
+	night = false;
+
+
+	grass = TextureController::LoadTexture("Images/grass.png",render);
+	darkGrass = TextureController::LoadTexture("Images/darkGrass.png", render);
+	water = TextureController::LoadTexture("Images/water.png", render);
+	darkWater = TextureController::LoadTexture("Images/darkwater.png", render);
+	tree = TextureController::LoadTexture("Images/tree.png", render);
+	darkTree = TextureController::LoadTexture("Images/darkTree.png", render);
+	longGrass = TextureController::LoadTexture("Images/longGrass.png", render);
+	darkLongGrass = TextureController::LoadTexture("Images/darklongGrass.png", render);
+	fire = TextureController::LoadTexture("Images/fire.png", render);
+	fireGrass = TextureController::LoadTexture("Images/fireGrass.png", render);
+	fireTree = TextureController::LoadTexture("Images/fireTree.png", render);
+	fadedFire = TextureController::LoadTexture("Images/fadedFire.png", render);
+
+	//TextureController::LoadTexture(texturePanel, render);
 
 	LoadMap(world);
 
-	float zoom = 1;
+	int zoom = 1;
 	int zoomSize = 32 * zoom;
 
-	src.x = src.y = 0;
-	src.w = dest.w = zoomSize;
-	src.h = dest.h = zoomSize;
+	scr.x = scr.y = 0;
+	scr.w = dest.w = zoomSize;
+	scr.h = dest.h = zoomSize;
 
 	dest.x = dest.y = 0;
 }
@@ -100,84 +106,85 @@ Map::Map()
 void Map::LoadMap(int arr[64][64]) {
 	for (int row = 0; row < 64; row++) {
 		for (int column = 0; column < 64; column++) {
-			world[row][column] == arr[row][column];
+			world[row][column] = arr[row][column]; // changed from == to =
 		}
 	}
 }
 
-void Map::DrawMap(int xmoved, int ymoved, bool night) {
+void Map::DrawMap(SDL_Renderer* render) {
+
 	int type = 0;
-	for (int row = ymoved; row < (64+ymoved); row++) { 
-		for (int column = xmoved; column < (64+xmoved); column++) {
+	for (int row = ymoved; row < (64 + ymoved); row++) {
+		for (int column = xmoved; column < (64 + xmoved); column++) {
 
 			type = world[row][column];
 
-			float zoom = 1;
+			int zoom = 1;
 			int zoomSize = 32 * zoom;
 
 			dest.x = (column - xmoved) * zoomSize; //zoomSize;
-			dest.y = (row-ymoved) * zoomSize;
-	
+			dest.y = (row - ymoved) * zoomSize;
+
 
 			switch (type) {
 			case 0: //renders the grass texture
-				if (night){
-					TextureController::Draw(darkGrass, src, dest);
+				if (night) {
+					SDL_RenderCopy(render,darkGrass,&scr, &dest);
 				}
 				else {
-					TextureController::Draw(grass, src, dest);
+					SDL_RenderCopy(render,grass, NULL, NULL);
 				}
 				break;
 			case 1: //renders the water
 				if (night) {
-					TextureController::Draw(darkWater, src, dest);
+					SDL_RenderCopy(render,darkWater, &scr, &dest);
 				}
 				else {
-					TextureController::Draw(water, src, dest);
+					SDL_RenderCopy(render,water, &scr, &dest);
 				}
 				break;
 			case 2: //renders any trees
-				//TextureController::Draw(tree, src, dest);
+				//TextureController::Draw(tree, scr, dest);
 				if (night) {
-					TextureController::Draw(darkTree, src, dest);
+					SDL_RenderCopy(render, darkTree, &scr, &dest);
 				}
 				else {
-					TextureController::Draw(tree, src, dest);
+					SDL_RenderCopy(render, tree, &scr, &dest);
 				}
 				break;
 			case 3: //renders the long grass
-				//TextureController::Draw(longGrass, src, dest);
+				//TextureController::Draw(longGrass, scr, dest);
 				if (night) {
-					TextureController::Draw(darkLongGrass, src, dest);
+					SDL_RenderCopy(render, darkLongGrass, &scr, &dest);
 				}
 				else {
-					TextureController::Draw(longGrass, src, dest);
+					SDL_RenderCopy(render, longGrass, &scr, &dest);
 				}
 				break;
 			case 4:
 				if (night) {
-					TextureController::Draw(fire, src, dest);
+					SDL_RenderCopy(render, fire, &scr, &dest);
 				}
 				else {
-					TextureController::Draw(fadedFire, src, dest);
+					SDL_RenderCopy(render, fadedFire, &scr, &dest);
 				}
 				break;
 			case 5:
 				if (night) {
-					TextureController::Draw(fireGrass, src, dest);
+					SDL_RenderCopy(render, fireGrass, &scr, &dest);
 				}
 				else {
-					TextureController::Draw(grass, src, dest);
+					SDL_RenderCopy(render, grass, &scr, &dest);
 				}
 				break;
 			case 6:
 				if (night) {
-					TextureController::Draw(fireTree, src, dest);
+					SDL_RenderCopy(render, fireTree, &scr, &dest);
 				}
 				else {
-					TextureController::Draw(tree, src, dest);
+					SDL_RenderCopy(render, tree, &scr, &dest);
 				}
-				break;			
+				break;
 			default:
 				break;
 			}

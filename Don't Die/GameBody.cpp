@@ -1,21 +1,24 @@
 #include "GameBody.h"
-#include "TextureController.h"
 
 
-GameBody::GameBody(const char* texturePanel)
+PlayerMovement* player;
+
+GameBody::GameBody(const char* texturePanel, SDL_Renderer* render,int xAxis, int yAxis )
 {
-	bodyTexture = TextureController::LoadTexture(texturePanel);
+	renderer = render;
+	bodyTexture = TextureController::LoadTexture(texturePanel, render);
+	
+	xPosition = xAxis;
+	yPosition = yAxis;
+	
 	if (bodyTexture != NULL)
 	{
-		std::cout << "Texture loaded" << std::endl;
+		std::cout << texturePanel << " loaded" << std::endl;
 	}
 }
 
-void GameBody::Update()
+/*void GameBody::UpdateObject()
 {
-	xPosition = 0;
-	yPosition = 0;
-
 	srcRectangle.h = 32;
 	srcRectangle.w = 32;
 	srcRectangle.x = 0;
@@ -25,11 +28,25 @@ void GameBody::Update()
 	destRectangle.y = yPosition;
 	destRectangle.w = srcRectangle.w * 2;
 	destRectangle.h = srcRectangle.h * 2;
+}*/
+
+/*void GameBody::Render()
+{
+	SDL_RenderCopy(renderer, bodyTexture, &srcRectangle, &destRectangle); // 1st Null is how much of the texture to render, 2nd is where to place it.
+}*/
+
+void GameBody::playerSetup()
+{
+	std::cout << " Player Setup" << std::endl;
+	player = new PlayerMovement();
 }
 
-void GameBody::Render()
+void GameBody::updatePlayer()
 {
-	//SDL_RenderCopy(Game::renderer, bodyTexture, &src, &dest);
-	//TextureController::Draw(bodyTexture, SDL_Rect src, SDL_Rect dest);
-	SDL_RenderCopy(Game::renderer, bodyTexture, NULL, NULL);
+	player->Movement();
+}
+
+void GameBody::characterRender()
+{
+	SDL_RenderCopy(renderer, bodyTexture, player->getScr(), player->getDest());
 }

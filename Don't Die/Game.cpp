@@ -4,18 +4,14 @@
 #include "GameBody.h"
 #include "Map.h"
 
-using namespace std;
 
 GameBody* character;
 
 Map* map;
 
-SDL_Renderer* Game::renderer = nullptr;
+//GameBody* background;
 
-
-
-//SDL_Texture* playerTexture;
-//SDL_Rect srcR, destR;
+//PlayerMovement* player;
 
 Game::Game()
 {}
@@ -33,19 +29,19 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
-		cout << "Subsystems Initialised" << endl;
+		std::cout << "Subsystems Initialised" << std::endl;
 
 		window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
 		if (window)
 		{
-			cout << "Window Created" << endl;
+			std::cout << "Window Created" << std::endl;
 		}
 
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		if (renderer)
 		{	
 			SDL_SetRenderDrawColor(renderer,255,255,255,255);			
-			cout << "Renderer Created" << endl;
+			std::cout << "Renderer Created" << std::endl;
 		}
 		gameRunning = true;
 	}
@@ -54,10 +50,11 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 		gameRunning = false; //If SDL has not been initailsed properly
 	}
 
-	//playerTexture = TextureController::LoadTexture("Images/Don'tStarve.png", renderer); // Simple texture loader youtube
-	character = new GameBody("Images/Wilson64.png");
-	map = new Map();
-	//std::cout << Map::getRectangle() << std::endl;
+	// Simple texture loader youtube
+	character = new GameBody("Images/Sprite.png", renderer, 0, 0);
+	//background = new GameBody("Images/Background.png", renderer, 0, 0);
+	map = new Map(renderer);
+	GameBody::playerSetup();
 }
 
 void Game::handleEvents()
@@ -76,20 +73,21 @@ void Game::handleEvents()
 
 void Game::update()
 {
-	character->Update();
+	//background->UpdateObject();
+	//character->UpdateCharacter();
+	//map->(renderer);
+	map->DrawMap(renderer);
+
+	GameBody::updatePlayer();
 }
 
-void Game::render(int movedx, int movedy, bool night)
+void Game::render()
 {
 	SDL_RenderClear(renderer);
 
-	//float zoom = 2;
+	//background->mapRender();
+	character->characterRender();
 
-	map->DrawMap(movedx, movedy, night);
-
-	//SDL_RenderCopy(renderer, playerTexture, NULL, &destR); // 1st Null is how much of the texture to render, 2nd is where to place it.
-	//SDL_Rect *src.h = src.w = 64;
-	character->Render();
 	SDL_RenderPresent(renderer);
 }
 
@@ -98,5 +96,5 @@ void Game::clean()
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
-	cout << "Game Cleaned" << endl;
+	std::cout << "Game Cleaned" << std::endl;
 }
