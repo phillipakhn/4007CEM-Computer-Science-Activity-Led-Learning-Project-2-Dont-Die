@@ -5,13 +5,18 @@
 class Map
 {
 public:
-	Map(SDL_Renderer* render);
+
+	
+
+
+
+	Map(SDL_Renderer * render);
 	~Map();
 
 	//float zoom = 2;
 
 	void LoadMap(int arr[64][64]);
-	void DrawMap(SDL_Renderer* render);
+	void DrawMap(int xmoved, int ymoved, bool night);
 	//static SDL_Rect* getRectangle();
 
 

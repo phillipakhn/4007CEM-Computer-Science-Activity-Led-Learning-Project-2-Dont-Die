@@ -20,9 +20,11 @@ public:
 	void clean(); // Clear game objects from memory onced finshed with them
 	bool running() { return gameRunning;} // let the main function know the game is running
 
+	static SDL_Renderer *renderer;
+
 private:
 	bool gameRunning; 
 	SDL_Window *window; 
-	SDL_Renderer *renderer;
+	
 };
 #endif /* Game_h*/

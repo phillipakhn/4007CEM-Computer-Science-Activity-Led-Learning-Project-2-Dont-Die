@@ -1,3 +1,2 @@
-﻿  main.cpp
-c:\users\alastair\source\repos\don't die\don't die\main.cpp(21): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+﻿  PlayerMovement.cpp
   Don't Die.vcxproj -> C:\Users\Alastair\source\repos\Don't Die\x64\Debug\Don't Die.exe

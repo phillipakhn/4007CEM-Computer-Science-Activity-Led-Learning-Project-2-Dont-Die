@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{A7725456-F27D-411C-938A-F026886E83F6}</ProjectGuid>
     <RootNamespace>DontDie</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Don%27t Die\Don%27t Die\drawTiles.cpp" />
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\Game.cpp" />
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\GameBody.cpp" />
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\GenerateMap.cpp" />
@@ -154,14 +155,17 @@
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\Map.cpp" />
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\mapDefinitions.cpp" />
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\mapMove.cpp" />
+    <ClCompile Include="..\..\Don%27t Die\Don%27t Die\PlayerMovement.cpp" />
     <ClCompile Include="..\..\Don%27t Die\Don%27t Die\TextureController.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Don%27t Die\Don%27t Die\drawTiles.h" />
     <ClInclude Include="..\..\Don%27t Die\Don%27t Die\Game.h" />
     <ClInclude Include="..\..\Don%27t Die\Don%27t Die\GameBody.h" />
     <ClInclude Include="..\..\Don%27t Die\Don%27t Die\GenerateMap.h" />
     <ClInclude Include="..\..\Don%27t Die\Don%27t Die\Map.h" />
     <ClInclude Include="..\..\Don%27t Die\Don%27t Die\mapMove.h" />
+    <ClInclude Include="..\..\Don%27t Die\Don%27t Die\PlayerMovement.h" />
     <ClInclude Include="TextureController.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

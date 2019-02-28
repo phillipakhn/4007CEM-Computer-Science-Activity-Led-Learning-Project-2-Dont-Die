@@ -9,7 +9,9 @@ GameBody* character;
 
 Map* map;
 
-//GameBody* background;
+SDL_Renderer* Game::renderer = nullptr;
+
+GameBody* background;
 
 //PlayerMovement* player;
 
@@ -51,7 +53,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 	}
 
 	// Simple texture loader youtube
-	character = new GameBody("Images/Sprite.png", renderer, 0, 0);
+	character = new GameBody("Images/Wilson32.png", renderer, 0, 0);
 	//background = new GameBody("Images/Background.png", renderer, 0, 0);
 	map = new Map(renderer);
 	GameBody::playerSetup();
@@ -76,7 +78,7 @@ void Game::update()
 	//background->UpdateObject();
 	//character->UpdateCharacter();
 	//map->(renderer);
-	map->DrawMap(renderer);
+	
 
 	GameBody::updatePlayer();
 }
@@ -84,7 +86,7 @@ void Game::update()
 void Game::render()
 {
 	SDL_RenderClear(renderer);
-
+	map->DrawMap(0, 0, false);
 	//background->mapRender();
 	character->characterRender();
 

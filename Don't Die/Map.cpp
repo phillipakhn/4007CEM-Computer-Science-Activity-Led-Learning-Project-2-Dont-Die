@@ -1,5 +1,5 @@
 #include "Map.h"
-
+#include "drawTiles.h"
 
 int world[64][64] = {  //matrix for the world but will be read from a database in the future
 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -68,14 +68,14 @@ int world[64][64] = {  //matrix for the world but will be read from a database i
 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-Map::Map(SDL_Renderer* render)
+Map::Map(SDL_Renderer * render)
 {
 	xmoved = 0;
 	ymoved = 0;
 	night = false;
 
 
-	grass = TextureController::LoadTexture("Images/grass.png",render);
+	grass = TextureController::LoadTexture("Images/grass.png", render);
 	darkGrass = TextureController::LoadTexture("Images/darkGrass.png", render);
 	water = TextureController::LoadTexture("Images/water.png", render);
 	darkWater = TextureController::LoadTexture("Images/darkwater.png", render);
@@ -111,7 +111,7 @@ void Map::LoadMap(int arr[64][64]) {
 	}
 }
 
-void Map::DrawMap(SDL_Renderer* render) {
+void Map::DrawMap(int xmoved, int ymoved, bool night) {
 
 	int type = 0;
 	for (int row = ymoved; row < (64 + ymoved); row++) {
@@ -129,60 +129,60 @@ void Map::DrawMap(SDL_Renderer* render) {
 			switch (type) {
 			case 0: //renders the grass texture
 				if (night) {
-					SDL_RenderCopy(render,darkGrass,&scr, &dest);
+					drawTiles::Draw(darkGrass, scr, dest);
 				}
 				else {
-					SDL_RenderCopy(render,grass, NULL, NULL);
+					drawTiles::Draw(grass, scr, dest);
 				}
 				break;
 			case 1: //renders the water
 				if (night) {
-					SDL_RenderCopy(render,darkWater, &scr, &dest);
+					drawTiles::Draw(darkWater, scr, dest);
 				}
 				else {
-					SDL_RenderCopy(render,water, &scr, &dest);
+					drawTiles::Draw(water, scr, dest);
 				}
 				break;
 			case 2: //renders any trees
 				//TextureController::Draw(tree, scr, dest);
 				if (night) {
-					SDL_RenderCopy(render, darkTree, &scr, &dest);
+					drawTiles::Draw(darkTree, scr, dest);
 				}
 				else {
-					SDL_RenderCopy(render, tree, &scr, &dest);
+					drawTiles::Draw(tree, scr, dest);
 				}
 				break;
 			case 3: //renders the long grass
 				//TextureController::Draw(longGrass, scr, dest);
 				if (night) {
-					SDL_RenderCopy(render, darkLongGrass, &scr, &dest);
+					drawTiles::Draw(darkLongGrass, scr, dest);
 				}
 				else {
-					SDL_RenderCopy(render, longGrass, &scr, &dest);
+					drawTiles::Draw(longGrass, scr, dest);
 				}
 				break;
 			case 4:
 				if (night) {
-					SDL_RenderCopy(render, fire, &scr, &dest);
+					drawTiles::Draw(fire, scr, dest);
 				}
 				else {
-					SDL_RenderCopy(render, fadedFire, &scr, &dest);
+					drawTiles::Draw(fadedFire, scr, dest);
 				}
 				break;
 			case 5:
 				if (night) {
-					SDL_RenderCopy(render, fireGrass, &scr, &dest);
+					drawTiles::Draw(fireGrass, scr, dest);
 				}
 				else {
-					SDL_RenderCopy(render, grass, &scr, &dest);
+					drawTiles::Draw(grass, scr, dest);
 				}
 				break;
 			case 6:
 				if (night) {
-					SDL_RenderCopy(render, fireTree, &scr, &dest);
+					drawTiles::Draw(fireTree, scr, dest);
 				}
 				else {
-					SDL_RenderCopy(render, tree, &scr, &dest);
+					drawTiles::Draw(tree, scr, dest);
 				}
 				break;
 			default:

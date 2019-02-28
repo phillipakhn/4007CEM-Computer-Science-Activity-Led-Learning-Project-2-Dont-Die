@@ -17,5 +17,7 @@ public:
 private:
 	int xPlayerPos;
 	int yPlayerPos;
+	int xMapPos;
+	int yMapPos;
 	SDL_Rect srcRectangle, destRectangle;
 };

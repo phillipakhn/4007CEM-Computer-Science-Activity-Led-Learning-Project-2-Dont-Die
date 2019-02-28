@@ -31,11 +31,16 @@ void PlayerMovement::Movement()
 	//destRectangle.x = 0;
 	//destRectangle.y = 0;
 
+	//std::cout << yPlayerPos << std::endl;
+	//std::cout << xPlayerPos << std::endl;
+
 	const Uint8* Key = SDL_GetKeyboardState(NULL); //http://lazyfoo.net/tutorials/SDL/18_key_states/index.php
 
 	if (Key[SDL_SCANCODE_UP] || Key[SDL_SCANCODE_W])
 	{
+		
 		yPlayerPos -= 1;
+		
 	}
 	else if (Key[SDL_SCANCODE_DOWN] || Key[SDL_SCANCODE_S])
 	{
@@ -70,7 +75,6 @@ void PlayerMovement::Movement()
 		destRectangle.x = xPlayerPos;
 		destRectangle.y = yPlayerPos;
 	}
-	//std::cout << xPlayerPos << std::endl;
 }
 
 
@@ -83,3 +87,5 @@ SDL_Rect* PlayerMovement::getScr()
 {
 	return &srcRectangle;
 }
+
+
