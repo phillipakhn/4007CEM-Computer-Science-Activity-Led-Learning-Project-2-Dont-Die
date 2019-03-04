@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <SDL2/SDL.h>
+#include "Link.h"
 #include <sqlite3.h> //Libary imported so that the code can link to database
 
 static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
@@ -36,9 +37,13 @@ int main(int argc, char* argv[]) {
     "Time VARCHAR NOT NULL);";
     
     //example data for World Table
-   sql = "INSERT INTO World(WorldID,PlayerID,MapID,Time)"
-    "VALUES('First World','P1','M1','T1');";// This data will be added to the World table
+//   sql = "INSERT INTO World(WorldID,PlayerID,MapID,Time)"
+   // "VALUES('First World','P1','M1','T1');";// This data will be added to the World table
 
+    //Update World Table Statements
+    sql = "UPDATE World set Time = 'T3' where WorldID= 'First World'; "\
+    "SELECT * from World";
+    
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
         fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
@@ -57,8 +62,12 @@ int main(int argc, char* argv[]) {
     "PlayerSanity VARCHAR(40) NOT NULL );";
     
     //example data for Player Table
-    sql = "INSERT INTO Player (PlayerID,InventoryID,PLayerName,PlayerFood, PlayerPosition, PlayerSanity)"
-    "VALUES(1, 1, 1, 'Meat', 400, 50);";// This data will be added to the Player table
+ //   sql = "INSERT INTO Player (PlayerID,InventoryID,PLayerName,PlayerFood, PlayerPosition, PlayerSanity)"
+   // "VALUES(1, 1, 1, 'Meat', 400, 50);";// This data will be added to the Player table
+    
+    //Update Player Table Statements
+    sql = "UPDATE Player set PlayerFood = 'Apple' where PlayerID=1; " \
+    "SELECT * from Player";
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
@@ -77,9 +86,13 @@ int main(int argc, char* argv[]) {
     "GrowthTime VARCHAR NOT NULL );";
     
     //example data for Crop Table
-    sql = "INSERT INTO Crop(CropID,WorldID,CropType,CropPosition,GrowthTime)"
-    "VALUES(1, 'First World','Wheat',21,-100);";// This data will be added to the Crop table
-
+    //sql = "INSERT INTO Crop(CropID,WorldID,CropType,CropPosition,GrowthTime)"
+   // "VALUES(1, 'First World','Wheat',21,-100);";// This data will be added to the Crop table
+    
+    //Update Crop Table Statements
+    sql = "UPDATE Crop set CropPosition = 25 where CropType= 'Wheat'; " \
+    "SELECT * from Crop";
+    
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
@@ -97,8 +110,12 @@ int main(int argc, char* argv[]) {
     "InventorySize INT);";
     
     //example data for Inventory Table
-    sql = "INSERT INTO Inventory(InventoryID,ItemID,InventoryName,InventorySize)"
-    "VALUES(1,'I1','Inventory1',20);";// This data will be added to the Inventory table
+  //  sql = "INSERT INTO Inventory(InventoryID,ItemID,InventoryName,InventorySize)"
+   // "VALUES(1,'I1','Inventory1',20);";// This data will be added to the Inventory table
+    
+    //Update Inventory Table Statements
+    sql = "UPDATE Inventory set InventroySize = 50 where InventoryName='Inventroy1';"\
+    "SELECT * from Inventory";
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
@@ -118,8 +135,12 @@ int main(int argc, char* argv[]) {
     "ChestPosition VARCHAR NOT NULL );";
     
     //example data for Chest Table
-    sql = "INSERT INTO Chest(ChestID,WorldID,ChestName,ChestNumber,ChestIndex,ChestPosition)"
-    "VALUES('C1', 'First World' ,'Armour', 1, 1, 40);";// This data will be added to the Chest table
+  //  sql = "INSERT INTO Chest(ChestID,WorldID,ChestName,ChestNumber,ChestIndex,ChestPosition)"
+   // "VALUES('C1', 'First World' ,'Armour', 1, 1, 40);";// This data will be added to the Chest table
+    
+    //Update Chest Table Statements
+    sql = "UPDATE Chest set ChestPosition = 55 where ChestName=Armour; " \
+    "SELECT * from Chest";
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
@@ -136,8 +157,12 @@ int main(int argc, char* argv[]) {
     "ItemName VARCHAR(40) NOT NULL);";
     
     //example data for Item Table
-    sql = "INSERT INTO Item(ItemID, InventoryID, ItemName)"
-    "VALUES('I1', '1', 'Egg');";// This data will be added to the Item table
+   // sql = "INSERT INTO Item(ItemID, InventoryID, ItemName)"
+    //"VALUES('I1', '1', 'Egg');";// This data will be added to the Item table
+    
+    //Update Item Table Statements
+    sql = "UPDATE Item set ItemName = 'Chicken' where ItemID='I1'; " \
+     "SELECT * from Item";
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
@@ -157,8 +182,12 @@ int main(int argc, char* argv[]) {
     "ItemIndex VARCHAR NOT NULL );";
     
     //example data for Item line Table
-    sql = "INSERT INTO Item_Line(Item_LineID,ItemID, ChestID, TrapID, ItemQuantity, ItemIndex)"
-   "VALUES(1, 'I1', 'C1', 1, 23, 829);";// This data will be added to the Item Line table
+    //sql = "INSERT INTO Item_Line(Item_LineID,ItemID, ChestID, TrapID, ItemQuantity, ItemIndex)"
+   //"VALUES(1, 'I1', 'C1', 1, 23, 829);";// This data will be added to the Item Line table
+    
+    //Update Item_Line Table Statements
+    sql = "UPDATE Item_Line set ItemQuantity = 45 where ItemID='I1'; " \
+     "SELECT * from Map";
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
@@ -167,6 +196,7 @@ int main(int argc, char* argv[]) {
     } else {
         fprintf(stdout, "Tables have been created.\n");
         fprintf(stdout, "Records have been created.\n");
+        fprintf(stdout, "Records have been updated.\n");
     }
     
     sql = "CREATE TABLE Map(" // Map Table
@@ -175,8 +205,12 @@ int main(int argc, char* argv[]) {
     "TrapID VARCHAR NOT NULL );";// Composite Key
     
     //example data for Map Table
-   sql = "INSERT INTO Map(MapID,ChestID,TrapID)"
-    "VALUES(1,1,1);"; // This data will be added to the Map table
+//   sql = "INSERT INTO Map(MapID,ChestID,TrapID)"
+   // "VALUES(1,1,1);"; // This data will be added to the Map table
+    
+    //Update Map Table Statements
+  sql = "UPDATE Map set TrapID = 2 where MapID=1; " \
+   "SELECT * from Map";
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
@@ -195,9 +229,12 @@ int main(int argc, char* argv[]) {
     "TimesUsed INT );";
    
 //example data for Trap Table
-  sql = "INSERT INTO Trap(TrapID, PlayerID, TrapPosition, TrapUsed, TimesUsed)"
-    "VALUES (1,1,450,1,2);";// This data will be added to the Trap table
+ // sql = "INSERT INTO Trap(TrapID, PlayerID, TrapPosition, TrapUsed, TimesUsed)"
+   // "VALUES (1,1,450,1,2);";// This data will be added to the Trap table
     
+//Update Trap Table Statements
+  sql = "UPDATE Trap set TimesUsed = 3 where TrapID=1; " \
+   "SELECT * from Trap";
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
@@ -206,10 +243,8 @@ int main(int argc, char* argv[]) {
     } else {
         fprintf(stdout, "Tables have been created.\n");
         fprintf(stdout, "Records have been created.\n");
+        fprintf(stdout, "Tables have been updated.\n");
     }
     sqlite3_close(db);
     return 0;
 }
-
-
-
