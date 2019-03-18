@@ -8,270 +8,277 @@
 
 static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
     int data;
-    for(data = 0; data<argc; data++) {
-        printf("%s = %s\n", azColName[data], argv[data] ? argv[data] : "NULL");
+    for(data = 0; data<argc; data++) {// This a for loop is so it checks the value of the number of databases so only 1 is able to work for this program
+        printf("%s = %s\n", azColName[data], argv[data] ? argv[data] : "NULL"); //
     }
     printf("\n");
     return 0;
 }
 
 int main(int argc, char* argv[]) {
-    sqlite3 *db;
+    sqlite3 *db; // This allows me to run the database using sqlite
     char *zErrMsg = 0;
-    int openData;
-   const char *sql;
+    int openData; // Variable used to help with opening the database over sqlite
+   const char *sql; // This variable is pivotal for the program otherwise it will keep causing a runtime error without the const
     
-    openData = sqlite3_open("DontStarve.db", &db); //this is the name of the database file that is linked to the code
+    openData = sqlite3_open("DontStarve.db", &db); // This is the name of the database file that is linked to the code.
     
     if( openData ) {
-        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
+        fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db)); // This will be outputted if the database can't be opened.
         return(0);
     } else {
-        fprintf(stdout, "Tables have been created.\n");
+        fprintf(stdout, "Tables have been created.\n"); // This will be outputted when tables have been made.
     }
     
     sql = "CREATE TABLE World("  // World Table
-    "WorldID VARCHAR PRIMARY KEY NOT NULL,"
+    "WorldID VARCHAR PRIMARY KEY NOT NULL," // Primary key
     "PlayerID VARCHAR REFERENCES Player (PlayerID) NOT NULL,"// Composite Key
     "MapID VARCHAR REFERENCES Map (MapID) NOT NULL,"// Composite Key
     "Time VARCHAR NOT NULL);";
     
     //example data for World Table
-//   sql = "INSERT INTO World(WorldID,PlayerID,MapID,Time)"
-   // "VALUES('First World','P1','M1','T1');";// This data will be added to the World table
+    sql = "INSERT INTO World(WorldID,PlayerID,MapID,Time)"
+    "VALUES('First World','P1','M1','T1');"; // This data will be added to the World table.
 
     //Update World Table Statements
     sql = "UPDATE World set Time = 'T3' where WorldID= 'First World';"
-    "SELECT * from World";
+    "SELECT * from World"; // This how the data will be updated with the World table.
     
-    //sql = "DELETE from World where Time ='T3';"
-    //"SELECT * from World";
+    //Delete World table statements
+   sql = "DELETE from World where Time ='T3';"
+    "SELECT * from World"; // This is how the data will be deleted from the database.
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
-        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg); // This will be outputted if the tables in the database cannot open.
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables have been created.\n");
-        fprintf(stdout, "Records have been created.\n");
+        fprintf(stdout, "Tables have been created.\n"); // This will be outputted when tables have been made.
+        fprintf(stdout, "Records have been created.\n"); // This will be outputted when records have been made.
     }
     
-    sql = "CREATE TABLE Player(" // Player Table
-    "PlayerID VARCHAR PRIMARY KEY NOT NULL,"
-    "InventoryID VARCHAR REFERENCES Inventory (InventoryID) NOT NULL, "
+   sql = "CREATE TABLE Player(" // Player Table
+    "PlayerID VARCHAR PRIMARY KEY NOT NULL," // Primary key
+    "InventoryID VARCHAR REFERENCES Inventory (InventoryID) NOT NULL," // Foreign key
     "PlayerName VARCHAR(35) NOT NULL,"
     "PlayerFood VARCHAR(40) NOT NULL,"
     "PlayerPosition VARCHAR(40) NOT NULL,"
     "PlayerSanity VARCHAR(40) NOT NULL );";
     
     //example data for Player Table
- //   sql = "INSERT INTO Player (PlayerID,InventoryID,PLayerName,PlayerFood, PlayerPosition, PlayerSanity)"
-   // "VALUES(1, 1, 1, 'Meat', 400, 50);";// This data will be added to the Player table
+    sql = "INSERT INTO Player (PlayerID,InventoryID,PLayerName,PlayerFood, PlayerPosition, PlayerSanity)"
+    "VALUES(1, 1, 1, 'Meat', 400, 50),(2,1,1,'Apple', 450, 60)"; // This data will be added to the Player table.
     
     //Update Player Table Statements
     sql = "UPDATE Player set PlayerFood = 'Apple' where PlayerID=1;"
-    "SELECT * from Player";
+    "SELECT * from Player"; // This data will be updated in the Player table.
     
-    //sql = "DELETE from Player where PlayerFood='Apple';"
-    //"SELECT * from Player";
+    //Delete Player table statements
+   sql = "DELETE from Player where PlayerFood='Apple';"
+    "SELECT * from Player"; // This data will be deleted from the Player table.
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
-        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg); // This will be outputted when tables cannot be made.
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables have been created.\n");
-        fprintf(stdout, "Records have been created.\n");
+        fprintf(stdout, "Tables have been created.\n"); // This will be outputted when tables have been made.
+        fprintf(stdout, "Records have been created.\n"); // This will be outputted when records have been made.
     }
     
-    sql = "CREATE TABLE Crop(" // Crop Table
-    "CropID VARCHAR PRIMARY KEY NOT NULL,"
-    "WorldID VARCHAR REFERENCES World (WorldID) NOT NULL,"//Foreign key
+   sql = "CREATE TABLE Crop(" // Crop Table.
+    "CropID VARCHAR PRIMARY KEY NOT NULL," // Primary key.
+    "WorldID VARCHAR REFERENCES World (WorldID) NOT NULL," // Foreign key.
     "CropType VARCHAR NOT NULL,"
     "CropPosition VARCHAR(40) NOT NULL,"
     "GrowthTime VARCHAR NOT NULL );";
     
-    //example data for Crop Table
-    //sql = "INSERT INTO Crop(CropID,WorldID,CropType,CropPosition,GrowthTime)"
-   // "VALUES(1, 'First World','Wheat',21,-100);";// This data will be added to the Crop table
+    //Example data for Crop Table
+    sql = "INSERT INTO Crop(CropID,WorldID,CropType,CropPosition,GrowthTime)"
+    "VALUES(1, 'First World','Wheat',21,-100);"; // This data will be added to the Crop table.
     
     //Update Crop Table Statements
     sql = "UPDATE Crop set CropPosition = 25 where CropType= 'Wheat';"
-    "SELECT * from Crop";
+    "SELECT * from Crop"; // This data will be modified in the Crop table.
     
-    //sql = "DELETE from Crop where CropPosition=25;"
-    //"SELECT * from Crop";
+    //Delete Crop table statements
+    sql = "DELETE from Crop where CropPosition=25;"
+    "SELECT * from Crop"; // This data will be removed from the Crop table.
     
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
-        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg); // This will be outputted when tables cannot be made.
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables have been created.\n");
-        fprintf(stdout, "Records have been created.\n");
+        fprintf(stdout, "Tables have been created.\n"); // This will be outputted when tables have been made.
+        fprintf(stdout, "Records have been created.\n"); // This will be outputted when records have been made.
     }
     
-    sql = "CREATE TABLE Inventory(" //Inventory Table
-    "InventoryID VARCHAR PRIMARY KEY NOT NULL,"
-    "ItemID VARCHAR REFERENCES Item (ItemID) NOT NULL,"//Foreign key
-    "InventoryName VARCHAR NOT NULL,"
+   sql = "CREATE TABLE Inventory(" // Inventory Table
+    "InventoryID VARCHAR PRIMARY KEY NOT NULL," // Primary key
+    "ItemID VARCHAR REFERENCES Item (ItemID) NOT NULL," // Foreign key
+   "InventoryName VARCHAR NOT NULL,"
     "InventorySize INT);";
     
     //example data for Inventory Table
-  //  sql = "INSERT INTO Inventory(InventoryID,ItemID,InventoryName,InventorySize)"
-   // "VALUES(1,'I1','Inventory1',20);";// This data will be added to the Inventory table
+sql = "INSERT INTO Inventory(InventoryID,ItemID,InventoryName,InventorySize)"
+"VALUES(1,'I1','Inventory1',20);"; // This data will be added to the Inventory table.
     
     //Update Inventory Table Statements
-    sql = "UPDATE Inventory set InventroySize = 50 where InventoryName='Inventroy1';"
-    "SELECT * from Inventory";
+ sql = "UPDATE Inventory set InventroySize = 50 where InventoryName='Inventroy1';"
+    "SELECT * from Inventory"; // This updated data will be added to the Inventory table.
     
-   // sql = "DELETE from Inventory where InventorySize=50;"
-    //"SELECT * from  Inventory";
+    //Delete Inventory table statements
+sql = "DELETE from Inventory where InventorySize=50;"
+"SELECT * from  Inventory"; // This data will be deleted from the Inventory table.
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
-        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg); // This will be outputted only if the tables cannot be made.
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables have been created.\n");
-        fprintf(stdout, "Records have been created.\n");
+        fprintf(stdout, "Tables have been created.\n"); //This will output to the user when tables are made.
+        fprintf(stdout, "Records have been created.\n"); // This will be outputted when records are created.
     }
     
-    sql = "CREATE TABLE Chest(" //Chest Table
-    "ChestID VARCHAR PRIMARY KEY NOT NULL,"
-    "WorldID VARCHAR REFERENCES World (WorldID) NOT NULL,"//Foreign key
-    "ChestName VARCHAR NOT NULL,"
-    "ChestNumber VARCHAR NOT NULL,"
-    "ChestIndex VARCHAR NOT NULL,"
+    sql = "CREATE TABLE Chest(" // Chest Table
+   "ChestID VARCHAR PRIMARY KEY NOT NULL," // Primary key
+   "WorldID VARCHAR REFERENCES World (WorldID) NOT NULL,"// Foreign key
+  "ChestName VARCHAR NOT NULL,"
+  "ChestNumber VARCHAR NOT NULL,"
+   "ChestIndex VARCHAR NOT NULL,"
     "ChestPosition VARCHAR NOT NULL );";
     
     //example data for Chest Table
-  //  sql = "INSERT INTO Chest(ChestID,WorldID,ChestName,ChestNumber,ChestIndex,ChestPosition)"
-   // "VALUES('C1', 'First World' ,'Armour', 1, 1, 40);";// This data will be added to the Chest table
+  sql = "INSERT INTO Chest(ChestID,WorldID,ChestName,ChestNumber,ChestIndex,ChestPosition)"
+  "VALUES('C1', 'First World' ,'Armour', 1, 1, 40);"; // This data will be added to the Chest table.
     
-    //Update Chest Table Statements
+    //Update Chest Table statements
     sql = "UPDATE Chest set ChestPosition = 55 where ChestName=Armour;"
-    "SELECT * from Chest";
+    "SELECT * from Chest"; // This data will be updated to the Chest table.
     
-    //sql = "DELETE from Chest where ChestPosition=55;"
-    //"SELECT * from Chest";
+    //Delete Chest table statements
+  sql = "DELETE from Chest where ChestPosition=55;"
+   "SELECT * from Chest"; // This will get rid of the data from the Chest table.
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
-        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg); // This will be outputted when the tables can't be made.
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables have been created.\n");
-        fprintf(stdout, "Records have been created.\n");
+        fprintf(stdout, "Tables have been created.\n"); // This will be outputted when Tables are created.
+        fprintf(stdout, "Records have been created.\n"); // This will be outputted when records are created.
     }
     
-    sql = "CREATE TABLE Item(" //Item Table
-    "ItemID VARCHAR PRIMARY KEY NOT NULL,"
-    "InventoryID VARCHAR REFERENCES Inventory(InventoryID) NOT NULL,"
+   sql = "CREATE TABLE Item(" // Item Table
+    "ItemID VARCHAR PRIMARY KEY NOT NULL," // Primary key
+    "InventoryID VARCHAR REFERENCES Inventory(InventoryID) NOT NULL," // Foreign key
     "ItemName VARCHAR(40) NOT NULL);";
     
     //example data for Item Table
-   // sql = "INSERT INTO Item(ItemID, InventoryID, ItemName)"
-    //"VALUES('I1', '1', 'Egg');";// This data will be added to the Item table
+    sql = "INSERT INTO Item(ItemID, InventoryID, ItemName)"
+    "VALUES('I1', '1', 'Egg');"; // This data will be added to the Item table
     
     //Update Item Table Statements
     sql = "UPDATE Item set ItemName = 'Chicken' where ItemID='I1';"
-     "SELECT * from Item";
+    "SELECT * from Item"; // This data will be updated within the Item table.
     
-    //sql = "DELETE from Item where ItemName='Chicken';"
-    //"SELECT * from Item";
+    // Delete Item table statements
+    sql = "DELETE from Item where ItemName='Chicken';"
+    "SELECT * from Item"; // This data will be deleted from the Item table.
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
-        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg); // This will be outputted when tables cannot be created.
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables have been created.\n");
-        fprintf(stdout, "Records have been created.\n");
+        fprintf(stdout, "Tables have been created.\n"); // This will be outputted when tables are created.
+        fprintf(stdout, "Records have been created.\n"); // This will be outputted when records are created.
     }
     
-    sql = "CREATE TABLE Item_line("// Item Line table
-    "Item_LineID VARCHAR PRIMARY KEY NOT NULL,"
-    "ItemID VARCHAR REFERENCES Item (ItemID) NOT NULL,"// Composite Key
-    "ChestID VARCHAR REFERENCES Chest (ChestID) NOT NULL,"// Composite Key
+    sql = "CREATE TABLE Item_line(" // Item Line table
+    "Item_LineID VARCHAR PRIMARY KEY NOT NULL," // Primary key
+    "ItemID VARCHAR REFERENCES Item (ItemID) NOT NULL," // Composite Key
+    "ChestID VARCHAR REFERENCES Chest (ChestID) NOT NULL," // Composite Key
     "TrapID INT REFERENCES Trap (TrapID) NOT NULL,"// Composite Key
     "ItemQuantity INT NOT NULL,"
     "ItemIndex VARCHAR NOT NULL );";
     
-    //example data for Item line Table
-    //sql = "INSERT INTO Item_Line(Item_LineID,ItemID, ChestID, TrapID, ItemQuantity, ItemIndex)"
-   //"VALUES(1, 'I1', 'C1', 1, 23, 829);";// This data will be added to the Item Line table
+    // example data for Item line Table
+    sql = "INSERT INTO Item_Line(Item_LineID,ItemID, ChestID, TrapID, ItemQuantity, ItemIndex)"
+    "VALUES(1, 'I1', 'C1', 1, 23, 829);"; // This data will be added to the Item Line table
     
-    //Update Item_Line Table Statements
+    // Update Item_Line Table Statements
     sql = "UPDATE Item_line set ItemQuantity = 45 where ItemID='I1';"
-     "SELECT * from Map";
+    "SELECT * from Map"; // This data will be updatted in the Item_Line table
     
-   // sql = "DELETE from Item_line where ItemQuantity= 45;"
-    //"SELECT * from Map";
+    //Delete records from Item line table
+    sql = "DELETE from Item_line where ItemQuantity= 45;"
+    "SELECT * from Map"; //  This data will be removed from the Item_Line table
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
-        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg); // This will be outputted when tables cannot be built.
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables have been created.\n");
-        fprintf(stdout, "Records have been created.\n");
-        fprintf(stdout, "Records have been updated.\n");
+        fprintf(stdout, "Tables have been created.\n"); // This will be outputted when tables are created.
+        fprintf(stdout, "Records have been created.\n"); // This will be outputted when records are created.
+        fprintf(stdout, "Records have been updated.\n"); // This will be outputted when records are updated.
     }
-    
     sql = "CREATE TABLE Map(" // Map Table
-    "MapID VARCHAR PRIMARY KEY NOT NULL,"
-    "ChestID VARCHAR NOT NULL,"// Composite Key
-    "TrapID VARCHAR NOT NULL );";// Composite Key
+    "MapID VARCHAR PRIMARY KEY NOT NULL," // Primary key
+    "ChestID VARCHAR NOT NULL," // Composite Key
+    "TrapID VARCHAR NOT NULL );"; // Composite Key
     
     //example data for Map Table
-//   sql = "INSERT INTO Map(MapID,ChestID,TrapID)"
-   // "VALUES(1,1,1);"; // This data will be added to the Map table
+    sql = "INSERT INTO Map(MapID,ChestID,TrapID)"
+    "VALUES(1,1,1);"; // This data will be added to the Map table
     
-    //Update Map Table Statements
-  sql = "UPDATE Map set TrapID = 2 where MapID=1;"
-   "SELECT * from Map";
+    // Update Map Table Statements
+    sql = "UPDATE Map set TrapID = 2 where MapID=1;"
+    "SELECT * from Map"; // This data will be updated in the Map table.
     
-    //sql = "DELETE from Map where TrapID=2;"
-    //"SELECT * from Map";
+    // Delete Map table statements
+    sql = "DELETE from Map where TrapID=2;"
+    "SELECT * from Map"; // This will be for data that will be deleted from Map table.
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
-        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg); // This will be outputted when tables cannot be made.
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables have been created.\n");
-        fprintf(stdout, "Records have been created.\n");
+        fprintf(stdout, "Tables have been created.\n"); // This will be outputted when tables are created.
+        fprintf(stdout, "Records have been created.\n"); // This will be outputted when records are created.
     }
-    
     sql = "CREATE TABLE Trap(" // Trap Table
-    "TrapID INT PRIMARY KEY NOT NULL,"
+    "TrapID INT PRIMARY KEY NOT NULL," // Primary key
     "PlayerID VARCHAR REFERENCES Player (PlayerID) NOT NULL,"// Foreign Key
     "TrapPosition VARCHAR NOT NULL,"
     "TrapUsed INT,"
     "TimesUsed INT );";
    
 //example data for Trap Table
- // sql = "INSERT INTO Trap(TrapID, PlayerID, TrapPosition, TrapUsed, TimesUsed)"
-   // "VALUES (1,1,450,1,2);";// This data will be added to the Trap table
+ sql = "INSERT INTO Trap(TrapID, PlayerID, TrapPosition, TrapUsed, TimesUsed)"
+   "VALUES (1,1,450,1,2);"; // This data will be added to the Trap table
     
 //Update Trap Table Statements
   sql = "UPDATE Trap set TimesUsed = 3 where TrapID=1;"
-   "SELECT * from Trap";
+   "SELECT * from Trap"; // This data will be updated in the Trap table
     
-    //sql = "DELETE from Trap where TimesUsed=3;"
-    //"SELECT * from Trap";
+    // Delete Trap table statements
+   sql = "DELETE from Trap where TimesUsed=3;"
+   "SELECT * from Trap"; // This data will be removed from the Trap table
     
     openData = sqlite3_exec(db, sql, callback, 0, &zErrMsg);
     if( openData != SQLITE_OK ){
-        fprintf(stderr, "Tables cannot open %s\n", zErrMsg);
+        fprintf(stderr, "Tables cannot open %s\n", zErrMsg); // This will be outputted when tables haven't been made.
         sqlite3_free(zErrMsg);
     } else {
-        fprintf(stdout, "Tables have been created.\n");
-        fprintf(stdout, "Records have been created.\n");
-        fprintf(stdout, "Tables have been updated.\n");
+        fprintf(stdout, "Tables have been created.\n"); // This will be outputted when tables have been made.
+        fprintf(stdout, "Records have been created.\n"); // This will be outputted when records have been made.
+        fprintf(stdout, "Tables have been updated.\n"); // This will be outputted when tables have been updated.
     }
-    sqlite3_close(db);
+    sqlite3_close(db); // This closes the database once all instructions are complete.
     return 0;
 }
