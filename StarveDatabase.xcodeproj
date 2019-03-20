@@ -2,7 +2,6 @@
 //  Copyright © 2019 Karl Atkinson. All rights reserved.
 #include <iostream>
 #include <stdio.h>
-#include <SDL2/SDL.h>
 #include <sqlite3.h> //Libary imported so that the code can link to database
 
 static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
