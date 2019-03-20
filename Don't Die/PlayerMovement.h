@@ -1,5 +1,6 @@
 #pragma once
 #include "Game.h"
+#include <vector>
 
 class PlayerMovement {
 
@@ -11,13 +12,18 @@ public:
 
 	SDL_Rect* getDest();
 	SDL_Rect* getScr();
-
-
+	int getxMapMovement();
+	int getyMapMovement();
+	int xMapMovement;
+	int yMapMovement;
+	std::vector<int> savePosition();
 
 private:
-	int xPlayerPos;
-	int yPlayerPos;
-	int xMapPos;
-	int yMapPos;
+	int yMovementP;
+	int yMovementM;
+	int xMovementP;
+	int xMovementM;
+	int	xAxisPos;
+	int yAxisPos;
 	SDL_Rect srcRectangle, destRectangle;
 };

@@ -106,7 +106,7 @@ Map::Map(SDL_Renderer * render)
 void Map::LoadMap(int arr[64][64]) {
 	for (int row = 0; row < 64; row++) {
 		for (int column = 0; column < 64; column++) {
-			world[row][column] = arr[row][column]; // changed from == to =
+			world[row][column] = arr[row][column]; 
 		}
 	}
 }

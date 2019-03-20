@@ -1,5 +1,8 @@
 #include "GameBody.h"
+#include <vector>
 
+unsigned int nextMoveTime;
+unsigned int lastTime;
 
 PlayerMovement* player;
 
@@ -17,33 +20,31 @@ GameBody::GameBody(const char* texturePanel, SDL_Renderer* render,int xAxis, int
 	}
 }
 
-/*void GameBody::UpdateObject()
-{
-	srcRectangle.h = 32;
-	srcRectangle.w = 32;
-	srcRectangle.x = 0;
-	srcRectangle.y = 0;
-
-	destRectangle.x = xPosition;
-	destRectangle.y = yPosition;
-	destRectangle.w = srcRectangle.w * 2;
-	destRectangle.h = srcRectangle.h * 2;
-}*/
-
-/*void GameBody::Render()
-{
-	SDL_RenderCopy(renderer, bodyTexture, &srcRectangle, &destRectangle); // 1st Null is how much of the texture to render, 2nd is where to place it.
-}*/
-
 void GameBody::playerSetup()
 {
 	std::cout << " Player Setup" << std::endl;
 	player = new PlayerMovement();
+	lastTime = 0;
 }
 
 void GameBody::updatePlayer()
 {
-	player->Movement();
+	player->Movement();	
+}
+
+std::vector<int> GameBody::getPosition()
+{
+	return player->savePosition();
+}
+
+int GameBody::getMapMovementX()
+{
+	return player->getxMapMovement();
+}
+
+int GameBody::getMapMovementY()
+{
+	return player->getyMapMovement();
 }
 
 void GameBody::characterRender()

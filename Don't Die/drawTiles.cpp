@@ -1,7 +1,5 @@
 #include "drawTiles.h"
 
-
-
 drawTiles::~drawTiles()
 {
 }

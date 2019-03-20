@@ -1,6 +1,6 @@
 #pragma once
 #include "Game.h"
-
+#include <vector>
 
 class GameBody {
 
@@ -10,22 +10,18 @@ public:
 
 	void UpdateObject();
 	void Render();
-	void mapRender();
 	void characterRender();
+	int getMapMovementX();
+	int getMapMovementY();
+	std::vector<int> getPosition();
 	static void updatePlayer();
 	static void playerSetup();
 	
-	
 private:
-
 	int random;
-	//int xCharacterPos;
-	//int yCharacterPos;
 	int xPosition;
 	int yPosition;
 
 	SDL_Texture* bodyTexture;
-	//SDL_Rect srcRectangle, destRectangle;
 	SDL_Renderer* renderer;
-
 };

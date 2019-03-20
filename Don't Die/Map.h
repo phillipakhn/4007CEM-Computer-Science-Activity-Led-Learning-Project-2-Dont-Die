@@ -1,15 +1,9 @@
 #pragma once
 #include "Game.h"
 
-
 class Map
 {
 public:
-
-	
-
-
-
 	Map(SDL_Renderer * render);
 	~Map();
 
@@ -18,7 +12,6 @@ public:
 	void LoadMap(int arr[64][64]);
 	void DrawMap(int xmoved, int ymoved, bool night);
 	//static SDL_Rect* getRectangle();
-
 
 private:
 
@@ -41,5 +34,4 @@ private:
 	SDL_Texture* fadedFire;
 
 	int map[32][32];
-
 };
