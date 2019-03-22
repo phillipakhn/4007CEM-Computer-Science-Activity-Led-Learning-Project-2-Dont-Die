@@ -9,7 +9,6 @@ public:
 	~PlayerMovement();
 
 	void Movement();
-
 	SDL_Rect* getDest();
 	SDL_Rect* getScr();
 	int getxMapMovement();

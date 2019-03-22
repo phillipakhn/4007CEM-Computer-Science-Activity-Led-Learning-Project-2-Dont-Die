@@ -5,11 +5,9 @@
 class GameBody {
 
 public:
-	GameBody(const char* texturePanel, SDL_Renderer* render,int xAxis ,int yAxis);
+	GameBody(const char* texturePanel, SDL_Renderer* render);
 	~GameBody();
 
-	void UpdateObject();
-	void Render();
 	void characterRender();
 	int getMapMovementX();
 	int getMapMovementY();
@@ -21,7 +19,6 @@ private:
 	int random;
 	int xPosition;
 	int yPosition;
-
 	SDL_Texture* bodyTexture;
 	SDL_Renderer* renderer;
 };

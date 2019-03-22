@@ -15,10 +15,10 @@ public:
 
 	void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen); 
 	void handleEvents();
-	void update(); // update all game objects 
+	void update(); 
 	void render(); 
-	void clean(); // Clear game objects from memory onced finshed with them
-	bool running() { return gameRunning;} // let the main function know the game is running
+	void clean();
+	bool running() { return gameRunning;} 
 	static SDL_Renderer *renderer;
 
 private:
