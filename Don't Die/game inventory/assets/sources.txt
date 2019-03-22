@@ -1,0 +1,6 @@
+The art used in this project was gathered from these websites:
+
+https://opengameart.org/content/rpg-tiles-cobble-stone-paths-town-objects
+https://opengameart.org/content/roguelike-tiles-large-collection
+
+You can use those as long as you follow each license.
